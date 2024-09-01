@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculator</title>
+</head>
+<body>
+    <h1>Calculator</h1>
+    <form id="calculatorForm">
+        <input type="number" id="operand1" placeholder="Operand 1">
+        <input type="text" id="operator" placeholder="Operator (+, -, *, /)" pattern="[+\-*/]" title="Allowed operators: +, -, *, /" required>
+        <input type="number" id="operand2" placeholder="Operand 2">
+        <button type="submit">Calculate</button>
+    </form>
+    <h2>Result: <span id="result"></span></h2>
+    <script>
+        document.getElementById('calculatorForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const operand1 = document.getElementById('operand1').value;
+            const operand2 = document.getElementById('operand2').value;
+            const operator = document.getElementById('operator').value;
+
+            fetch(`/calculate?operand1=${operand1}&operand2=${operand2}&operator=${operator}`)
+                .then(response => response.text())
+                .then(result => {
+                    document.getElementById('result').textContent = result;
+                });
+        });
+    </script>
+</body>
+</html>
